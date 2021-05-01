@@ -30,7 +30,7 @@ echo -e "$red\n ##--------------------------------------------------------------
 
 #===[ Most Editable ]===#
 
-export DEFCONFIG=akame_defconfig
+export DEFCONFIG=akame2_defconfig
 export NKD=willow
 export CODENAME=willow
 GCC_or_CLANG=2 #1 - GCC, 2 - CLANG
@@ -210,13 +210,12 @@ if [ "$GCC_or_CLANG" -eq "1" ]
 then	
 
 
-    make prepare \
+    make $DEFCONFIG prepare modules_prepare vdso_prepare \
 	CC=gcc \
 	PATH=${PATH} \
 	CROSS_COMPILE=${CROSS_COMPILE} \
 	CROSS_COMPILE_ARM32=${CROSS_COMPILE_ARM32} \
 	ARCH=${ARCH} \
-	O=${OUT_DIR} \
     INSTALL_MOD_PATH=. \
     ${JOBS} 
 	
@@ -227,14 +226,13 @@ then
 else	
 
     
-    make  prepare \
+    make $DEFCONFIG  prepare modules_prepare vdso_prepare \
 	CC=clang \
 	PATH=${PATH} \
 	CLANG_TRIPLE=${CLANG_TRIPLE} \
 	CROSS_COMPILE=${CROSS_COMPILE} \
 	CROSS_COMPILE_ARM32=${CROSS_COMPILE_ARM32} \
 	ARCH=${ARCH} \
-	O=${OUT_DIR} \
 	${JOBS} \
     INSTALL_MOD_PATH=. \
     $VALUES
